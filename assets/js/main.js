@@ -1,0 +1,11 @@
+const header=document.querySelector('.site-header');
+const menuBtn=document.querySelector('.menu-btn');
+const nav=document.querySelector('.nav-links');
+function syncHeader(){header?.classList.toggle('scrolled',scrollY>20)}syncHeader();addEventListener('scroll',syncHeader,{passive:true});
+menuBtn?.addEventListener('click',()=>{nav.classList.toggle('open');document.body.classList.toggle('menu-open');menuBtn.setAttribute('aria-expanded',nav.classList.contains('open'))});
+document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>{nav?.classList.remove('open');document.body.classList.remove('menu-open')}));
+const io=new IntersectionObserver((entries)=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+document.querySelectorAll('[data-year]').forEach(el=>el.textContent=new Date().getFullYear());
+const form=document.querySelector('#enquiryForm');
+form?.addEventListener('submit',e=>{e.preventDefault();const fd=new FormData(form);const text=`Journey Master Travels enquiry\nName: ${fd.get('name')}\nPhone: ${fd.get('phone')}\nTravel interest: ${fd.get('interest')}\nMessage: ${fd.get('message')}`;navigator.clipboard?.writeText(text);alert('Your enquiry details are ready. Please call Journey Master Travels on +94 77 445 1011 to continue.');});
